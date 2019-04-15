@@ -10,7 +10,6 @@ class GasStationsController < ApplicationController
 
   # GET /gas_stations/1
   def show
-    # TODO DEBUG show
     gas_station = GasStation.find(params[:id]) 
     render json: {status: 'SUCCESS', message:'Loaded gas station', data:gas_station},status: :ok
   end
@@ -28,10 +27,11 @@ class GasStationsController < ApplicationController
 
   # PATCH/PUT /gas_stations/1
   def update
-    if @gas_station.update(gas_station_params)
-      render json: @gas_station
+    gas_station = GasStation.find(params[:id]) 
+    if gas_station.update(gas_station_params)
+      render json: {status: 'SUCCESS', message:'Updated gas station information', data:gas_station},status: :ok
     else
-      render json: @gas_station.errors, status: :unprocessable_entity
+      render json: {status: 'ERROR', message:'Gas station information not changed', data:gas_station.errors}, status: :unprocessable_entity
     end
   end
 
